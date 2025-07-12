@@ -1,46 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Life-Improving Book</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+  <title>My Life-Improving Book (Mobile)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>
   <style>
     body {
       margin: 0;
       padding: 20px;
-      background: #f4f4f4;
-      text-align: center;
-      font-family: Arial;
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
     }
-    #book {
-      width: 800px;
-      height: 500px;
-      margin: 0 auto;
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
     }
     .page {
-      width: 400px;
-      height: 500px;
       background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-    .page-content {
-      padding: 20px;
-      text-align: left;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     trix-editor {
-      min-height: 350px;
-      border: none;
-      background: #fafafa;
+      min-height: 200px;
+      margin-top: 10px;
     }
     button {
-      margin: 10px 0;
+      margin-top: 10px;
+      width: 100%;
       padding: 10px;
       background: #007bff;
       color: white;
       border: none;
-      cursor: pointer;
+      border-radius: 6px;
+      font-size: 16px;
     }
     button:hover {
       background: #0056b3;
@@ -49,68 +44,45 @@
 </head>
 <body>
   <h1>My Life-Improving Book</h1>
-  <div id="book">
-    <!-- Page 1 -->
-    <div class="page">
-      <div class="page-content">
-        <h2>Welcome</h2>
-        <input id="input1" type="hidden" name="page1-content">
-        <trix-editor input="input1" id="page1" placeholder="Edit the introduction here..."></trix-editor>
-        <p><button onclick="saveContent(1)">Save Page</button></p>
-      </div>
-    </div>
 
-    <!-- Page 2 -->
-    <div class="page">
-      <div class="page-content">
-        <h2>Time Management</h2>
-        <input id="input2" type="hidden" name="page2-content">
-        <trix-editor input="input2" id="page2" placeholder="Edit Time Management tips here..."></trix-editor>
-        <p><button onclick="openForm('Time Management')">Ask a Question</button></p>
-      </div>
-    </div>
+  <div class="page">
+    <h2>Welcome</h2>
+    <input id="input1" type="hidden">
+    <trix-editor input="input1" id="page1" placeholder="Edit introduction..."></trix-editor>
+    <button onclick="saveContent(1)">Save</button>
+  </div>
 
-    <!-- Page 3 -->
-    <div class="page">
-      <div class="page-content">
-        <h2>Mindfulness</h2>
-        <input id="input3" type="hidden" name="page3-content">
-        <trix-editor input="input3" id="page3" placeholder="Edit Mindfulness tips here..."></trix-editor>
-        <p><button onclick="openForm('Mindfulness')">Ask a Question</button></p>
-      </div>
-    </div>
+  <div class="page">
+    <h2>Time Management</h2>
+    <input id="input2" type="hidden">
+    <trix-editor input="input2" id="page2" placeholder="Edit Time Management tips..."></trix-editor>
+    <button onclick="saveContent(2)">Save</button>
+  </div>
+
+  <div class="page">
+    <h2>Mindfulness</h2>
+    <input id="input3" type="hidden">
+    <trix-editor input="input3" id="page3" placeholder="Edit Mindfulness tips..."></trix-editor>
+    <button onclick="saveContent(3)">Save</button>
   </div>
 
   <script>
-    $(document).ready(function() {
-      $("#book").turn({
-        width: 800,
-        height: 500,
-        autoCenter: true
-      });
-      loadContent();
-    });
-
     function saveContent(pageNum) {
       const editor = document.querySelector("#page" + pageNum);
       const content = editor.editor.getDocument().toString();
       localStorage.setItem("page" + pageNum, content);
-      alert("Page " + pageNum + " saved!");
+      alert("Saved!");
     }
 
-    function loadContent() {
+    window.onload = function () {
       for (let i = 1; i <= 3; i++) {
-        let content = localStorage.getItem("page" + i);
+        const content = localStorage.getItem("page" + i);
         if (content) {
           const editor = document.querySelector("#page" + i);
           editor.editor.loadHTML(content);
         }
       }
-    }
-
-    function openForm(page) {
-      window.open("https://forms.gle/your-google-form-link?entry.123456789=" + encodeURIComponent(page), "_blank");
-    }
+    };
   </script>
 </body>
 </html>
